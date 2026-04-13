@@ -269,14 +269,25 @@ const Hero = () => (
       </p>
 
       <div className="anim-fadeup delay-400" style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-        <button style={{
-          background: "linear-gradient(135deg, #2d6a4f, #52b788)",
-          color: "white", border: "none", borderRadius: 99,
-          padding: "15px 32px", fontSize: "0.975rem", fontWeight: 600,
-          cursor: "pointer", letterSpacing: "0.02em",
-          boxShadow: "0 8px 28px rgba(45,106,79,0.55)",
-          transition: "transform 0.2s, box-shadow 0.2s",
-        }}
+        <button
+          onClick={() => {
+            const section = document.getElementById("guides");
+            if (section) {
+              section.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+          style={{
+            background: "linear-gradient(135deg, #2d6a4f, #52b788)",
+            color: "white",
+            border: "none",
+            borderRadius: 99,
+            padding: "15px 32px",
+            fontSize: "0.975rem",
+            fontWeight: 600,
+            cursor: "pointer",
+            boxShadow: "0 8px 28px rgba(45,106,79,0.55)",
+            transition: "transform 0.2s",
+          }}
           onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"}
           onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
         >
@@ -613,7 +624,7 @@ const guides = [
 ];
 
 const FeaturedGuides = () => (
-  <section style={{
+  <section id="guides" style={{
     padding: "7rem 2rem",
     background: "linear-gradient(180deg, var(--green-pale) 0%, var(--cream) 100%)",
   }}>
@@ -643,21 +654,6 @@ const FeaturedGuides = () => (
             border: "1px solid rgba(45,106,79,0.08)",
           }}>
             <div style={{ display: "flex", gap: "1rem", marginBottom: "1.25rem" }}>
-              <div style={{ position: "relative", flexShrink: 0 }}>
-                <img
-                  src={g.img} alt={g.name}
-                  style={{
-                    width: 68, height: 68, borderRadius: "50%",
-                    objectFit: "cover",
-                    border: "3px solid var(--green-pale)",
-                  }}
-                />
-                <div style={{
-                  position: "absolute", bottom: 2, right: 2,
-                  width: 14, height: 14, borderRadius: "50%",
-                  background: "#22c55e", border: "2px solid white",
-                }} />
-              </div>
               <div>
                 <h3 style={{ fontWeight: 600, fontSize: "1.05rem", color: "var(--charcoal)" }}>{g.name}</h3>
                 <p style={{ fontSize: "0.72rem", color: "var(--green-accent)", fontWeight: 500, marginBottom: "0.2rem", display: "flex", alignItems: "center", gap: 4 }}>
@@ -701,8 +697,10 @@ const FeaturedGuides = () => (
               </div>
               <button 
                 onClick={() => {
-                 window.location.href = "tel:+919778405403";
-              }}
+                  const message = `Hi, I want to book ${g.name} as my guide.`;
+                  const url = `https://wa.me/919778405403?text=${encodeURIComponent(message)}`;
+                  window.open(url, "_blank");
+                }}
               style={{
                 background: "linear-gradient(135deg, #2d6a4f, #40916c)",
                 color: "white",
@@ -804,62 +802,146 @@ const TrustSection = () => {
 
 // ─── Final CTA ───────────────────────────────────────────────────────────────
 const FinalCTA = () => (
-  <section style={{
-    position: "relative", overflow: "hidden",
-    padding: "8rem 2rem",
-    background: "linear-gradient(135deg, var(--green-deep) 0%, #0d2b1f 100%)",
-    textAlign: "center",
-  }}>
+  <section
+    style={{
+      position: "relative",
+      overflow: "hidden",
+      padding: "8rem 2rem",
+      background: "linear-gradient(135deg, var(--green-deep) 0%, #0d2b1f 100%)",
+      textAlign: "center",
+    }}
+  >
     {/* Background decoration */}
-    <div style={{
-      position: "absolute", top: -100, left: "50%", transform: "translateX(-50%)",
-      width: 600, height: 600, borderRadius: "50%",
-      background: "radial-gradient(circle, rgba(64,145,108,0.2) 0%, transparent 70%)",
-      pointerEvents: "none",
-    }} />
-    <div style={{
-      position: "absolute", bottom: -60, right: -60,
-      width: 240, height: 240, borderRadius: "50%",
-      background: "rgba(116,198,157,0.07)",
-    }} />
+    <div
+      style={{
+        position: "absolute",
+        top: -100,
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: 600,
+        height: 600,
+        borderRadius: "50%",
+        background:
+          "radial-gradient(circle, rgba(64,145,108,0.2) 0%, transparent 70%)",
+        pointerEvents: "none",
+      }}
+    />
+    <div
+      style={{
+        position: "absolute",
+        bottom: -60,
+        right: -60,
+        width: 240,
+        height: 240,
+        borderRadius: "50%",
+        background: "rgba(116,198,157,0.07)",
+      }}
+    />
 
     <div style={{ position: "relative", maxWidth: 680, margin: "0 auto" }}>
-      <div className="pill" style={{ background: "rgba(116,198,157,0.12)", color: "var(--green-light)", border: "1px solid rgba(116,198,157,0.2)", marginBottom: "1.5rem" }}>
+      <div
+        className="pill"
+        style={{
+          background: "rgba(116,198,157,0.12)",
+          color: "var(--green-light)",
+          border: "1px solid rgba(116,198,157,0.2)",
+          marginBottom: "1.5rem",
+        }}
+      >
         ✦ Ready to explore?
       </div>
-      <h2 className="font-display" style={{
-        fontSize: "clamp(2.2rem, 5vw, 4rem)", fontWeight: 600,
-        color: "white", letterSpacing: "-0.02em", lineHeight: 1.15,
-        marginBottom: "1.25rem",
-      }}>
-        Start Exploring Kerala<br />
-        <em style={{ color: "var(--green-light)", fontStyle: "italic" }}>Like a Local</em>
-      </h2>
-      <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.05rem", lineHeight: 1.7, marginBottom: "2.5rem" }}>
-        We're just getting started. Be among the first travelers to experience Kerala through the eyes of a local — early access, real connections, no tourist traps.
-      </p>
-      <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-        <button style={{
-          background: "linear-gradient(135deg, #40916c, #74c69d)",
-          color: "white", border: "none", borderRadius: 99,
-          padding: "16px 36px", fontSize: "1rem", fontWeight: 600,
-          cursor: "pointer", letterSpacing: "0.02em",
-          boxShadow: "0 8px 32px rgba(64,145,108,0.5)",
-          transition: "transform 0.2s, box-shadow 0.2s",
+
+      <h2
+        className="font-display"
+        style={{
+          fontSize: "clamp(2.2rem, 5vw, 4rem)",
+          fontWeight: 600,
+          color: "white",
+          letterSpacing: "-0.02em",
+          lineHeight: 1.15,
+          marginBottom: "1.25rem",
         }}
-          onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.boxShadow = "0 12px 40px rgba(64,145,108,0.65)"; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 8px 32px rgba(64,145,108,0.5)"; }}
+      >
+        Start Exploring Kerala
+        <br />
+        <em style={{ color: "var(--green-light)", fontStyle: "italic" }}>
+          Like a Local
+        </em>
+      </h2>
+
+      <p
+        style={{
+          color: "rgba(255,255,255,0.6)",
+          fontSize: "1.05rem",
+          lineHeight: 1.7,
+          marginBottom: "2.5rem",
+        }}
+      >
+        We're just getting started. Be among the first travelers to experience
+        Kerala through the eyes of a local — early access, real connections, no
+        tourist traps.
+      </p>
+
+      <div
+        style={{
+          display: "flex",
+          gap: "1rem",
+          justifyContent: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        {/* PRIMARY BUTTON */}
+        <button
+          onClick={() => {
+            const section = document.getElementById("guides");
+            if (section) {
+              section.scrollIntoView({ behavior: "smooth" });
+            } else {
+              console.warn("guides section not found");
+            }
+          }}
+          style={{
+            background: "linear-gradient(135deg, #2d6a4f, #40916c)",
+            color: "white",
+            border: "none",
+            borderRadius: 99,
+            padding: "16px 36px",
+            fontSize: "1rem",
+            fontWeight: 600,
+            cursor: "pointer",
+            transition: "transform 0.2s",
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.transform = "scale(1.05)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.transform = "scale(1)")
+          }
         >
           Find Your Guide →
         </button>
-        <button style={{
-          background: "transparent",
-          color: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 99,
-          padding: "16px 36px", fontSize: "1rem", fontWeight: 500,
-          cursor: "pointer", transition: "border-color 0.2s, color 0.2s",
-        }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)"; e.currentTarget.style.color = "white"; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; e.currentTarget.style.color = "rgba(255,255,255,0.7)"; }}
+
+        {/* SECONDARY BUTTON */}
+        <button
+          style={{
+            background: "transparent",
+            color: "rgba(255,255,255,0.7)",
+            border: "1px solid rgba(255,255,255,0.2)",
+            borderRadius: 99,
+            padding: "16px 36px",
+            fontSize: "1rem",
+            fontWeight: 500,
+            cursor: "pointer",
+            transition: "border-color 0.2s, color 0.2s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)";
+            e.currentTarget.style.color = "white";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
+            e.currentTarget.style.color = "rgba(255,255,255,0.7)";
+          }}
         >
           Browse Destinations
         </button>
@@ -867,7 +949,6 @@ const FinalCTA = () => (
     </div>
   </section>
 );
-
 // ─── Footer ──────────────────────────────────────────────────────────────────
 const Footer = () => (
   <footer style={{
