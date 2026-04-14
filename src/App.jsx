@@ -623,7 +623,7 @@ const guides = [
     },
 ];
 
-const FeaturedGuides = () => (
+const FeaturedGuides = ({ onBookNow }) => (
   <section id="guides" style={{
     padding: "7rem 2rem",
     background: "linear-gradient(180deg, var(--green-pale) 0%, var(--cream) 100%)",
@@ -696,11 +696,7 @@ const FeaturedGuides = () => (
                 </span>
               </div>
               <button 
-                onClick={() => {
-                  const message = `Hi, I want to book ${g.name} as my guide.`;
-                  const url = `https://wa.me/919778405403?text=${encodeURIComponent(message)}`;
-                  window.open(url, "_blank");
-                }}
+                onClick={onBookNow}
               style={{
                 background: "linear-gradient(135deg, #2d6a4f, #40916c)",
                 color: "white",
@@ -1029,6 +1025,14 @@ const Footer = () => (
 
 // ─── App ─────────────────────────────────────────────────────────────────────
 export default function App() {
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    location: "",
+    message: ""
+  });
+  const [error, setError] = useState("");
+
   return (
     <>
       <FontStyle />
@@ -1038,7 +1042,7 @@ export default function App() {
         <ValueProp />
         <HowItWorks />
         <ExplorePlaces />
-        <FeaturedGuides />
+        <FeaturedGuides onBookNow={() => setShowForm(true)} />
         <TrustSection />
         <FinalCTA />
       </main>
@@ -1078,6 +1082,101 @@ export default function App() {
     <path d="M16 .5C7.4.5.5 7.4.5 16c0 2.8.7 5.4 2.1 7.7L.5 31.5l8-2.1c2.2 1.2 4.6 1.8 7.1 1.8 8.6 0 15.5-6.9 15.5-15.5S24.6.5 16 .5zm0 28.3c-2.3 0-4.5-.6-6.5-1.7l-.5-.3-4.7 1.2 1.3-4.6-.3-.5c-1.2-2-1.9-4.3-1.9-6.7C3.4 8.6 9.6 2.4 16 2.4S28.6 8.6 28.6 16 22.4 28.8 16 28.8zm7.5-9.3c-.4-.2-2.4-1.2-2.8-1.3-.4-.2-.6-.2-.9.2s-1 1.3-1.2 1.6c-.2.2-.4.3-.8.1-2.3-1.1-3.8-2-5.3-4.5-.4-.7.4-.6 1.1-2 .1-.2.1-.5 0-.7-.1-.2-.9-2.2-1.2-3-.3-.8-.6-.7-.9-.7h-.7c-.2 0-.7.1-1 .5s-1.4 1.4-1.4 3.4 1.5 4 1.7 4.3c.2.3 3 4.6 7.4 6.5 1 .4 1.8.6 2.4.8 1 .3 1.9.2 2.6.1.8-.1 2.4-1 2.8-1.9.3-.9.3-1.7.2-1.9-.1-.2-.3-.3-.7-.5z"/>
   </svg>
 </a>
-</>
-);
+      {showForm && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          background: "rgba(0,0,0,0.6)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 9999,
+        }}>
+          <div style={{
+            background: "white",
+            padding: "30px",
+            borderRadius: "12px",
+            width: "90%",
+            maxWidth: "400px",
+          }}>
+            <h2>Request a Guide</h2>
+            <input
+              placeholder="Your Name"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              style={{ width: "100%", marginBottom: "10px", padding: "10px" }}
+            />
+            <input
+              placeholder="Location"
+              value={formData.location}
+              onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+              style={{ width: "100%", marginBottom: "10px", padding: "10px" }}
+            />
+            <textarea
+              placeholder="Tell us what you want to explore (food, places, etc.)"
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              style={{ width: "100%", marginBottom: "10px", padding: "10px" }}
+            />
+            {error && (
+              <p style={{ color: "red", marginBottom: "10px" }}>
+                {error}
+              </p>
+            )}
+            <button
+              disabled={!formData.name || !formData.location}
+              onClick={() => {
+                if (!formData.name || !formData.location) {
+                  setError("Please fill all required fields");
+                  return;
+                }
+
+                const text = `Hi, my name is ${formData.name}.
+I am from ${formData.location}.
+I need: ${formData.message}`;
+
+                const url = `https://wa.me/919778405403?text=${encodeURIComponent(text)}`;
+
+                window.open(url, "_blank");
+
+                setShowForm(false);
+                setFormData({
+                  name: "",
+                  location: "",
+                  message: ""
+                });
+                setError("");
+              }}
+              style={{
+                width: "100%",
+                padding: "12px",
+                background: !formData.name || !formData.location ? "#ccc" : "#2d6a4f",
+                color: "white",
+                border: "none",
+                borderRadius: "8px",
+                cursor: !formData.name || !formData.location ? "not-allowed" : "pointer"
+              }}
+            >
+              Submit
+            </button>
+            <button
+              onClick={() => setShowForm(false)}
+              style={{
+                marginTop: "10px",
+                background: "none",
+                border: "none",
+                color: "gray",
+                cursor: "pointer",
+              }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }
