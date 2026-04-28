@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import guideData from "./data/guides";
+import fort from "./assets/destinations/fortkochi.jpg";
+import cherai from "./assets/destinations/cherai.jpg";
+import munnar from "./assets/destinations/munnar.jpg";
 
 const themes = {
   dark: {
@@ -130,24 +133,24 @@ const steps = [
 const places = [
   {
     name: "Fort Kochi",
-    tag: "Heritage and Culture",
-    desc: "Wander Dutch cemeteries, Chinese fishing nets at sunrise, and spice markets that still smell like the 1500s.",
-    img: "https://images.unsplash.com/photo-1609920658906-8223bd289001?w=800&auto=format&fit=crop",
-    guides: 84,
+    tag: "Heritage & Culture",
+    image: fort,
+    description:
+      "Historic coastal area known for colonial architecture, Chinese fishing nets, and vibrant cultural streets.",
   },
   {
-    name: "Paravoor",
-    tag: "Hills and Tea Gardens",
-    desc: "Endless emerald tea estates, rolling mist, elephant sightings, and cardamom scented air high above the plains.",
-    img: "https://images.unsplash.com/photo-1587653915936-d8d30a22e079?w=800&auto=format&fit=crop",
-    guides: 62,
+    name: "Cherai Beach",
+    tag: "Backwaters & Beach",
+    image: cherai,
+    description:
+      "A long, peaceful beach with shallow waters, coconut groves, and frequent dolphin sightings.",
   },
   {
-    name: "Cherai",
-    tag: "Backwaters and Villages",
-    desc: "Glide through a web of canals, sleep on a houseboat, and watch village life unfold on the water.",
-    img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&auto=format&fit=crop&crop=center",
-    guides: 97,
+    name: "Munnar",
+    tag: "Hills & Tea Gardens",
+    image: munnar,
+    description:
+      "Rolling tea plantations, misty hills, waterfalls, and cool climate perfect for nature lovers.",
   },
 ];
 
@@ -1664,50 +1667,49 @@ const HowItWorks = () => (
   </section>
 );
 
-const ExplorePlaces = () => (
-  <section id="destinations" className="section anchor-section">
-    <div className="section-inner">
-      <div className="section-heading reveal" data-reveal>
-        <div className="section-line" />
-        <h2 className="font-display section-title">Explore Places</h2>
-        <p className="section-copy">
-          Three of Kerala's most unforgettable destinations for a first great
-          Hirevoy experience.
-        </p>
-      </div>
+const ExplorePlaces = () => {
+  const navigate = useNavigate();
 
-      <div className="cards-grid places-grid">
-        {places.map((place, index) => (
-          <article
-            key={place.name}
-            className={`card place-card lift-card reveal delay-${(index % 3) + 1}`}
-            data-reveal
-          >
-            <div className="place-media">
-              <img src={place.img} alt={place.name} />
-              <span className="place-chip">{place.tag}</span>
-              <span className="place-count">{place.guides} guides available</span>
-            </div>
-            <div className="place-body">
-              <h3 className="font-display place-name">{place.name}</h3>
-              <p className="place-copy">{place.desc}</p>
-              <div style={{ marginTop: "1.35rem" }}>
+  return (
+    <section id="destinations" className="section anchor-section">
+      <div className="section-inner">
+        <div className="section-heading reveal" data-reveal>
+          <div className="section-line" />
+          <h2 className="font-display section-title">Explore Places</h2>
+          <p className="section-copy">
+            Three of Kerala's most unforgettable destinations for a first great
+            Hirevoy experience.
+          </p>
+        </div>
+
+        <div className="cards-grid places-grid">
+          {places.map((place, index) => (
+            <div
+              key={place.name}
+              className={`destination-card reveal delay-${(index % 3) + 1}`}
+              data-reveal
+            >
+              <img src={place.image} alt={place.name} />
+
+              <div className="card-content">
+                <span className="destination-tag">{place.tag}</span>
+                <h3>{place.name}</h3>
+                <p>{place.description}</p>
+
                 <button
-                  type="button"
-                  className="button button-primary"
-                  style={{ width: "100%" }}
-                  onClick={() => scrollToSection("guides")}
+                  className="primary-btn"
+                  onClick={() => navigate(`/guides?location=${place.name}`)}
                 >
                   Explore with a Guide
                 </button>
               </div>
             </div>
-          </article>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const FeaturedGuides = ({ onBookNow }) => (
   <section

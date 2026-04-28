@@ -1,36 +1,38 @@
 import { Link, useNavigate } from "react-router-dom";
+import fortKochi from "../assets/destinations/fortkochi.jpg";
+import cherai from "../assets/destinations/cherai.jpg";
+import munnar from "../assets/destinations/munnar.jpg";
+import alleppey from "../assets/destinations/alleppey.jpg";
 
 const destinations = [
   {
     name: "Fort Kochi",
-    desc: "Historic coastal area known for colonial architecture, Chinese fishing nets, and cultural streets.",
-    location: "Kochi"
+    tag: "Heritage & Culture",
+    image: fortKochi,
+    description:
+      "Historic streets, colonial buildings, and iconic Chinese fishing nets make Fort Kochi the cultural heart of Kerala.",
   },
   {
     name: "Cherai Beach",
-    desc: "A long, calm beach with shallow waters, coconut groves, and occasional dolphin sightings.",
-    location: "Kochi"
+    tag: "Beach & Relaxation",
+    image: cherai,
+    description:
+      "A long, clean beach with calm waves—perfect for swimming, sunsets, and spotting dolphins.",
   },
   {
     name: "Munnar",
-    desc: "Hill station famous for tea plantations, misty valleys, and scenic viewpoints.",
-    location: "Munnar"
+    tag: "Hills & Tea Gardens",
+    image: munnar,
+    description:
+      "Rolling tea plantations, misty hills, waterfalls, and cool weather—ideal for nature lovers.",
   },
   {
     name: "Alleppey",
-    desc: "Backwater paradise with houseboats, canals, and slow village life.",
-    location: "Alleppey"
+    tag: "Backwaters",
+    image: alleppey,
+    description:
+      "Cruise through Kerala's famous backwaters on a houseboat and experience peaceful village life.",
   },
-  {
-    name: "Wayanad",
-    desc: "Forest-covered hills with waterfalls, caves, and wildlife experiences.",
-    location: "Wayanad"
-  },
-  {
-    name: "Varkala",
-    desc: "Cliffside beach destination with cafes, sunsets, and spiritual vibes.",
-    location: "Varkala"
-  }
 ];
 
 const Destinations = () => {
@@ -70,86 +72,25 @@ const Destinations = () => {
           <h1>Explore Destinations</h1>
           <p>Pick a Kerala destination and find trusted local guides.</p>
 
-          <div className="grid-3">
+          <div className="destinations-grid">
+            {destinations.map((d) => (
+              <div key={d.name} className="destination-card">
+                <img src={d.image} alt={d.name} />
 
-            <div className="card">
-              <h2 className="card-title">Fort Kochi</h2>
-              <p className="card-desc">
-                Historic coastal area known for colonial architecture, Chinese fishing nets, and cultural streets.
-              </p>
-              <button
-                className="card-btn"
-                onClick={() => navigate("/guides?location=Kochi")}
-              >
-                Find Guides
-              </button>
-            </div>
+                <div className="card-content">
+                  <span className="destination-tag">{d.tag}</span>
+                  <h3>{d.name}</h3>
+                  <p>{d.description}</p>
 
-            <div className="card">
-              <h2 className="card-title">Cherai Beach</h2>
-              <p className="card-desc">
-                A calm beach with shallow waters, coconut groves, and occasional dolphin sightings.
-              </p>
-              <button
-                className="card-btn"
-                onClick={() => navigate("/guides?location=Cherai")}
-              >
-                Find Guides
-              </button>
-            </div>
-
-            <div className="card">
-              <h2 className="card-title">Munnar</h2>
-              <p className="card-desc">
-                Tea plantations, misty hills, waterfalls, and cool climate perfect for nature lovers.
-              </p>
-              <button
-                className="card-btn"
-                onClick={() => navigate("/guides?location=Munnar")}
-              >
-                Find Guides
-              </button>
-            </div>
-
-            <div className="card">
-              <h2 className="card-title">Alleppey</h2>
-              <p className="card-desc">
-                Famous for houseboats, backwaters, and peaceful village life along canals.
-              </p>
-              <button
-                className="card-btn"
-                onClick={() => navigate("/guides?location=Alleppey")}
-              >
-                Find Guides
-              </button>
-            </div>
-
-            <div className="card">
-              <h2 className="card-title">Varkala</h2>
-              <p className="card-desc">
-                Cliffside beaches, cafes, sunset views, and a relaxed coastal vibe.
-              </p>
-              <button
-                className="card-btn"
-                onClick={() => navigate("/guides?location=Varkala")}
-              >
-                Find Guides
-              </button>
-            </div>
-
-            <div className="card">
-              <h2 className="card-title">Wayanad</h2>
-              <p className="card-desc">
-                Forests, waterfalls, caves, and wildlife experiences in the Western Ghats.
-              </p>
-              <button
-                className="card-btn"
-                onClick={() => navigate("/guides?location=Wayanad")}
-              >
-                Find Guides
-              </button>
-            </div>
-
+                  <button
+                    className="primary-btn"
+                    onClick={() => navigate(`/guides?location=${d.name}`)}
+                  >
+                    Explore with a Guide
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
