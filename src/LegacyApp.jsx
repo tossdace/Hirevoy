@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import guideData from "./data/guides";
+
 import destinations from "./data/destinations";
 
 const theme = {
@@ -1473,37 +1473,6 @@ const SocialProof = () => (
   </section>
 );
 
-const PopularGuidesPreview = () => {
-  const navigate = useNavigate();
-
-  return (
-    <section className="section" style={{ background: "var(--bg)" }}>
-      <div className="section-inner">
-        <div className="section-container">
-          <h2 style={{ marginBottom: "20px" }}>Popular Guides</h2>
-
-          <div className="guides-grid">
-            {guideData.slice(0, 3).map((guide) => (
-              <div key={guide.id} className="card">
-                <h3 className="card-title">{guide.name}</h3>
-                <p>{guide.location}</p>
-
-                <button
-                  className="primary-btn"
-                  style={{ width: "100%", marginTop: "14px" }}
-                  onClick={() => navigate(`/guides/${guide.id}`)}
-                >
-                  View Guide
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
 const ValueProp = () => (
   <section
     className="section anchor-section"
@@ -1944,7 +1913,7 @@ Can you share details and availability?`;
       <main>
         <Hero />
         <SocialProof />
-        <PopularGuidesPreview />
+
         <ValueProp />
         <HowItWorks />
         <ExplorePlaces />
